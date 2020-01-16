@@ -50,7 +50,11 @@ $(function() {
       } /* End function Ship */
 
       /*#### Add function checkSunk ##### */
-
+        this.checkSunk = fuction() {
+            for (var i = 0; I < this.squares.length; i++) {
+                
+            }
+        }
 //       this.place();
 //    }
 
