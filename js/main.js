@@ -26,7 +26,6 @@ $(function() {
                            break;
                        }
                    }
-               }
            } else {
                var r = Math.floor(Math.random() * this.board.length);
                var c = Math.floor(Math.random() * (this.board.length - length));
@@ -47,16 +46,22 @@ $(function() {
                }
            }
         }
-      } /* End function Ship */
+    }
+    this.place();
+} /* End function Ship */
 
-      /*#### Add function checkSunk ##### */
-        this.checkSunk = fuction() {
-            for (var i = 0; I < this.squares.length; i++) {
-                
+         this.checkSunk = function(){
+            for (var i = 0; i< this.squares.length; i++){
+                var r = this.squares[i][0];
+                var c = this.squares[i][1];
+                if(this.board[r][c] === "S"){
+                    return false;
+                }
             }
-        }
-//       this.place();
-//    }
+             this.sunk = true;
+            return true;
+         }
+}
 
     function drawBoard(board, player) {
         for (var i = 0; i < board.length; i++) {
@@ -64,6 +69,101 @@ $(function() {
                 var color = "#1AD1FF";
                 if(board[i][j] == "S" && player === "player") {
                     color = "gray";
+                } /* Use different colors to indicate hits and misses */
+                else if(board[i][j] == "H"){
+                    color = "#e60000";
+                }else if(board[i][j] == "M"){
+                    color = "#ffff1a";
+                }
+                $("#" + player + " > #" + i + "_" + j).css("background-color", color);
+            }
+        }
+    }
+
+
+
+    function init() {
+        playerBoard = [];
+        playerShips = [];
+        compBoard = [];
+        compGuessBoard = [];
+        compShips = [];
+        for (var i = 0; i < 10; i++) {
+            var row = [];
+            for (var j = 0; j < 10; j++) {
+                row.push("W");
+                var id = i + "_" + j;
+                $("#player").append("<div id='"+id+"' class='gridsquare'></div>");
+                $("#computer").append("<div id='"+id+"' class='gridsquare'></div>");
+                }
+            playerBoard.push(row);
+            compBoard.push(row.slice());
+            compGuessBoard.push(row.slice());
+            }
+
+            playerShips.push(new Ship("Carrier", 5, playerBoard));
+            playerShips.push(new Ship("Battleship", 4, playerBoard));
+            playerShips.push(new Ship("Cruiser", 3, playerBoard));
+            playerShips.push(new Ship("Submarine", 3, playerBoard));
+            playerShips.push(new Ship("Destroyer", 2, playerBoard));
+            compShips.push(new Ship("Carrier", 5, compBoard));
+            compShips.push(new Ship("Battleship", 4, compBoard));
+            compShips.push(new Ship("Cruiser", 3, compBoard));
+            compShips.push(new Ship("Submarine", 3, compBoard));
+            compShips.push(new Ship("Destroyer", 2, compBoard));
+
+            drawBoard(playerBoard, "player");
+
+            /* Click Event on class gridSquare */
+            $("#computer > .gridsquare").click(function(){
+                var id = $(this).attr("id").split("_");
+                var r = parseInt(id[0]);
+                var c = parseInt(id[1]);
+        }
+});
+           }
+        }
+    }
+    this.place();
+} /* End function Ship */
+
+
+      this.checkSunk = function()
+      {
+        for (var i = 0; i < this.squares,length; i++)
+        {
+            var r = this.squares[i][0];
+            var c = this.squares[i][1];
+            if (this.board[r][c] === "S")
+            {
+                return false;
+            }
+          {
+            this.sunk = true;
+            return
+          }
+        }
+        this.sunk = true;
+        return true;
+      }
+
+    function drawBoard(board, player)
+    {
+        for (var i = 0; i < board.length; i++) {
+            for (var j = 0; j < board[i].length; j++)
+            {
+                var color = "#1AD1FF";
+                if(board[i][j] == "S" && player === "player")
+                {
+                    color = "gray";
+                }
+                else if (board[i][j] == "H")
+                {
+                color = "E60000";
+                }
+                else if (board[i][j] == "W")
+                {
+                color = "FFFFLA";
                 }
                 $("#" + player + " > #" + i + "_" + j).css("background-color", color);
             }
@@ -84,15 +184,11 @@ $(function() {
                 $("#player").append("<div id='"+id+"' class='gridsquare'></div>");
                 $("#computer").append("<div id='"+id+"' class='gridsquare'></div>");
                 }
-//           Add row to the player board
             playerBoard.push(row);
-//          Add row to computer board
             compBoard.push(row.slice());
-//           Add row to compGuessBoard board
             compGuessBoard.push(row.slice());
             }
 
-            /* Ended off class 1/8/20 */
             playerShips.push(new Ship("Carrier", 5, playerBoard));
             playerShips.push(new Ship("Battleship", 4, playerBoard));
             playerShips.push(new Ship("Cruiser", 3, playerBoard));
@@ -105,5 +201,12 @@ $(function() {
             compShips.push(new Ship("Destroyer", 2, compBoard));
 
             drawBoard(playerBoard, "player");
+
+            $("#computer > .gridsquare").click(function())
+            {
+                var id = $(this).attr("id").split("_");
+                var r = parse/int(id[0]);
+                var c = parse/int(id[1]);
+            });
         }
 });
